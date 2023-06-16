@@ -7,22 +7,22 @@ export const Footer = () => {
                 </div>
 
                 <div>
-                    <a href="" className="text-white me-4">
+                    <a href="" className=" me-4">
                         <i className="fab fa-facebook-f"></i>
                     </a>
-                    <a href="" className="text-white me-4">
+                    <a href="" className=" me-4">
                         <i className="fab fa-twitter"></i>
                     </a>
-                    <a href="" className="text-white me-4">
+                    <a href="" className=" me-4">
                         <i className="fab fa-google"></i>
                     </a>
-                    <a href="" className="text-white me-4">
+                    <a href="" className=" me-4">
                         <i className="fab fa-instagram"></i>
                     </a>
-                    <a href="" className="text-white me-4">
+                    <a href="" className=" me-4">
                         <i className="fab fa-linkedin"></i>
                     </a>
-                    <a href="" className="text-white me-4">
+                    <a href="" className=" me-4">
                         <i className="fab fa-github"></i>
                     </a>
                 </div>
@@ -46,7 +46,7 @@ export const Footer = () => {
                         </div>
 
                         <div className="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
-                            <h6 className="text-uppercase fw-bold">Products</h6>
+                            <h6 className="text-uppercase fw-bold">Integrantes</h6>
                             <hr
                                 className="mb-4 mt-0 d-inline-block mx-auto"
                             />
