@@ -81,3 +81,15 @@ html,
 .forgot-password a {
   color: #167bff;
 }
+
+header {
+  height: 110px;
+}
+
+footer {
+  height: 420px;
+}
+
+main {
+  min-height: calc(100vh - 110px - 420px);
+}
