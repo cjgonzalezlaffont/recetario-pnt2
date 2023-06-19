@@ -50,7 +50,7 @@ export const SignUp = () => {
 
   const handleSubmit = (event) => {
     //agregar Url de backend
-    const urlApiUsers = "";
+    const urlApiUsers = "http://localhost:3001/api/users/"; //SACAR HARCODEADO
     event.preventDefault();
     // Envía los datos al backend usando una solicitud HTTP (por ejemplo, fetch o axios)
     fetch(urlApiUsers, {
