@@ -1,7 +1,15 @@
 import { Link } from "react-router-dom";
 import logo from "../../assets/logo.png";
+import { useNavigate } from "react-router-dom";
 
 export const Header = () => {
+  //hook para navegar a /recipes cuando se le da click al boton 'GO' del buscador
+  const navigate = useNavigate();
+  //ruta del recipes
+  const navigateToRecipe = () => {
+    navigate("/recipes");
+  };
+
   return (
     <header>
       <nav className="navbar navbar-expand-lg bg-body-tertiary p-4">
@@ -40,7 +48,11 @@ export const Header = () => {
                 </Link>
               </li>
             </ul>
-            <form className="d-flex col-4" role="search">
+            <form
+              className="d-flex col-4"
+              role="search"
+              onSubmit={navigateToRecipe}
+            >
               <input
                 className="form-control me-2"
                 type="search"
