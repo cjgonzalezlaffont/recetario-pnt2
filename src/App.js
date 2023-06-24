@@ -6,7 +6,10 @@ import { Home } from "./components/home/Home";
 import { Authenticator } from "./components/login/Authenticator";
 import { Footer } from "./components/footer/Footer";
 import { RecipeList } from "./components/Recipes/RecipeList";
-import "bootstrap/dist/css/bootstrap.min.css";
+import { RecipesPage } from "./components/Recipes/RecipesPage";
+import { Recipe } from "./components/Recipes/Recipe";
+
+
 
 function App() {
   return (
@@ -19,6 +22,8 @@ function App() {
           <Route path="/sign-in" element={<SignIn></SignIn>} />
           <Route path="/sign-up" element={<SignUp></SignUp>} />
           <Route path="/recipes" element={<RecipeList />} />
+          <Route path="/recipesPage" element={<RecipesPage />} />
+          <Route path="/recipe" element={<Recipe />} />
         </Routes>
       </main>
       <Footer></Footer>

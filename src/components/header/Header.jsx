@@ -27,7 +27,7 @@ export const Header = () => {
                 </Link>
               </li>
               <li className="nav-item me-5 ">
-                <Link to={"/recipes"} className={"text-decoration-none"}>
+                <Link to={"/recipesPage"} className={"text-decoration-none"}>
                   <button className={"nav-link"}>
                     <h5>Recipes</h5>
                   </button>
