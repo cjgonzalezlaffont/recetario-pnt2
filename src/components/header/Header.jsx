@@ -1,15 +1,17 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import logo from "../../assets/logo.png";
-import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 export const Header = () => {
-  //hook para navegar a /recipes cuando se le da click al boton 'GO' del buscador
+  const [searchTerm, setSearchTerm] = useState("");
   const navigate = useNavigate();
-  //ruta del recipes
-  const navigateToRecipe = () => {
-    navigate("/recipes");
+  const handleChange = (event) => {
+    setSearchTerm(event.target.value);
   };
-
+  const handleSearch = (event) => {
+    event.preventDefault();
+    navigate("/recipesPage", { state: { search: searchTerm } });
+  };
   return (
     <header>
       <nav className="navbar navbar-expand-lg bg-body-tertiary p-4">
@@ -51,14 +53,16 @@ export const Header = () => {
             <form
               className="d-flex col-4"
               role="search"
-              onSubmit={navigateToRecipe}
+              onSubmit={handleSearch}
             >
               <input
                 className="form-control me-2"
                 type="search"
                 placeholder="Search for a recipe"
                 aria-label="Search"
-              ></input>
+                value={searchTerm}
+                onChange={handleChange}
+              />
               <button className="btn btn-outline-success" type="submit">
                 GO!
               </button>

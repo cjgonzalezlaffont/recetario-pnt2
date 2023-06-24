@@ -9,11 +9,9 @@ import { RecipeList } from "./components/Recipes/RecipeList";
 import { RecipesPage } from "./components/Recipes/RecipesPage";
 import { Recipe } from "./components/Recipes/Recipe";
 
-
-
 function App() {
   return (
-    <div className={"bg-warning"}>
+    <div className={"bg-dark"}>
       <Header></Header>
       <main>
         <Routes>

@@ -1,15 +1,10 @@
-
-//import { CardGroup } from "react-bootstrap";
 import { Recipe } from "./Recipe";
-
-
-
+//import { CardGroup } from "react-bootstrap";
 export function RecipeList(props) {
-
   return (
     <div>
-      <h1>RECIPE LIST</h1>
-      <div className="card-group">
+      <h1> ☻ ☻ ☻ RECIPE LIST ☻ ☻ ☻</h1>
+      <div className="card-group d-flex justify-content-center align-items-center">
         {props.Recipes.map((recipe) => {
           return (
             <Recipe
@@ -19,12 +14,9 @@ export function RecipeList(props) {
               Instructions={recipe.instructions}
             />
           );
-        })};
-  
-        </div>
-  
+        })}
+        ;
+      </div>
     </div>
-  )
-};
-
-
+  );
+}
