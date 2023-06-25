@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 export function Recipe(props) {
   return (
-    <Link to={`/`}>
+    <Link to={`./RecipeDetails`}>
       <div className="card p-2 m-4" style={{ width: "18rem", height: "31rem" }}>
         <img
           class="card-img-top"
@@ -33,8 +33,8 @@ export function Recipe(props) {
           >
             {props.Instructions.split(" ").slice(0, 20).join(" ") + "..."}
           </p>
-          <a href="#" className="btn btn-primary">
-            Click for more...
+          <a href="./RecipeDetails" className="btn btn-primary">
+            Full recipe...
           </a>
         </div>
       </div>

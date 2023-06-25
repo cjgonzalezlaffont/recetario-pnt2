@@ -17,7 +17,7 @@ export function RecipesPage(props) {
       .catch((error) => {
         console.error(error);
       });
-  }, []);
+  }, [search]);
   return (
     <div>
       <RecipeList Recipes={recipes} />

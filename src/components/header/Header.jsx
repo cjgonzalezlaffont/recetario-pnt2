@@ -10,7 +10,7 @@ export const Header = () => {
   };
   const handleSearch = (event) => {
     event.preventDefault();
-    navigate("/recipesPage", { state: { search: searchTerm } });
+    navigate("/recipesPage", { state: { search: " "+searchTerm+" " } });
   };
   return (
     <header>
