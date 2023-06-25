@@ -8,58 +8,72 @@ import { useNavigate } from "react-router-dom";
 export function RecipeDetails() {
   const [isFavorite, setIsFavorite] = useState(false); // Cambié el valor inicial a `false`
 
-  // useEffect(() => {
-  //   setIsFavorite ();
-  // }, []); // No se necesita añadir localStorage.token como dependencia
-
-
-
   const location = useLocation();
   const navigate = useNavigate();
   const details = location.state?.Recipe || "";
 
-  const handleFavorites = (event) => {
-    const urlRecipesFavorites = "http://localhost:3001/api/recipes/favorites/"+details.Title+"/user/"+localStorage.getItem("_Id");
-    event.preventDefault();
-    navigate("/favorites");
-  
+  const urlGetFavoriteRecipe =
+    "http://localhost:3001/api/recipes/favorites/" +
+    details.Title +
+    "/user/" +
+    localStorage.getItem("_Id"); //URL que consulta si la receta esta en favoritos
+  const urlAddFavoriteRecipe =
+    "http://localhost:3001/api/recipes/favorites/add"; //URL para agregar receta
 
-    fetch(urlRecipesFavorites)
-      .then((response) => {
-        if (response) {
+  const favoriteExists = fetch(urlGetFavoriteRecipe)
+    .then(async (response) => {
+      let res = await response.json();
+      if (res && res.userId) {
+        setIsFavorite(true);
+      }
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+
+  const urlDeleteFavoriteRecipe =
+    "http://localhost:3001/api/recipes/favorites/delete/" + favoriteExists._id; // URL para borrar la receta
+
+  const handleFavorites = (event) => {
+    if (isFavorite) {
+      fetch(
+        urlDeleteFavoriteRecipe,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }.then((response) => {
+          if (response.ok) {
+            console.log("La solicitud de eliminación se completó con éxito");
+          } else {
+            console.log("Hubo un error en la solicitud de eliminación");
+          }
+        })
+      );
+    } else {
+      fetch(urlAddFavoriteRecipe, {
+        method: "POST",
+        body: JSON.stringify({
+          title: details.Title,
+          instructions: details.Instructions,
+          ingredients: details.Ingredients,
+          image: details.URLImage,
+          userId: localStorage.getItem("_Id"),
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then((response) => {
           response.json();
           setIsFavorite(true);
-          console.log("fetch si hay response"+response.json());
-        } else {
-          console.log("fetch si NO hay response"+response);
-        }
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-
-    fetch(urlRecipesFavorites, {
-      method: "POST",
-      body: JSON.stringify({
-        title: details.Title,
-        instructions: details.Instructions,
-        ingredients: details.Ingredients,
-        image: details.URLImage,
-        userId: localStorage.getItem("_Id"),
-      }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((response) => {
-        response.json();
-        setIsFavorite(true);
-        
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-    };
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
+  };
 
   return (
     <div
@@ -86,10 +100,11 @@ export function RecipeDetails() {
         <div className="text-end p-4">
           <button
             onClick={handleFavorites}
-            className={`btn btn-outline-danger btn-lg ${isFavorite ? "active" : ""}`}
+            className={`btn btn-outline-danger btn-lg ${
+              isFavorite ? "active" : ""
+            }`}
           >
             add to favorites&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-           
             {isFavorite ? (
               <FontAwesomeIcon icon={faHeart} />
             ) : (
@@ -101,5 +116,3 @@ export function RecipeDetails() {
     </div>
   );
 }
-
-          
