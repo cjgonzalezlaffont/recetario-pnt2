@@ -40,6 +40,7 @@ export const SignIn = () => {
           // Almacenar el token en el almacenamiento local (localStorage)
           localStorage.setItem("token", token);
           localStorage.setItem("mail", formData.email);
+          localStorage.setItem("_Id", data.user._id );
           console.log("token: " + token);
           // Hacer algo con el token, como guardarlo en el almacenamiento local o en las cookies. Para recuperarlo: localStorage.getItem("token")
           navigate("/");

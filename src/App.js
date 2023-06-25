@@ -9,6 +9,7 @@ import { RecipeList } from "./components/Recipes/RecipeList";
 import { RecipesPage } from "./components/Recipes/RecipesPage";
 import { Recipe } from "./components/Recipes/Recipe";
 import { RecipeDetails } from "./components/Recipes/RecipeDetails";
+import { Favorites } from "./components/Recipes/Favorites";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
           <Route path="/recipesPage" element={<RecipesPage />} />
           <Route path="/recipe" element={<Recipe />} />
           <Route path="/recipeDetails" element={<RecipeDetails />} />
+          <Route path="/favorites" element={<Favorites />} />
         </Routes>
       </main>
       <Footer></Footer>

@@ -1,13 +1,63 @@
+import { useState } from "react";
 import { useLocation } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { faHeart as faHeartRegular } from "@fortawesome/free-regular-svg-icons";
+import { useNavigate } from "react-router-dom";
 
 export function RecipeDetails() {
-  const isFavorite = true;
+  const [isFavorite, setIsFavorite] = useState(false); // Cambié el valor inicial a `false`
   const location = useLocation();
+  const navigate = useNavigate();
   const details = location.state?.Recipe || "";
-  //console.log(details.Title);
+
+  const handleFavorites = (event) => {
+    const urlRecipesFavorites = "http://localhost:3001/api/recipes/favorites/"+details.Title+"/user/"+localStorage.getItem("_Id");
+    
+    
+     
+    event.preventDefault();
+    navigate("/favorites");
+
+
+    fetch(urlRecipesFavorites)
+      .then((response) => {
+        if (response) {
+          response.json();
+          setIsFavorite(true);
+          console.log(response);
+        } else {
+          console.log(response);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  
+
+    fetch(urlRecipesFavorites, {
+      method: "POST",
+      body: JSON.stringify({
+        title: details.Title,
+        instructions: details.Instructions,
+        ingredients: details.Ingredients,
+        image: details.URLImage,
+        userId: localStorage.getItem("_Id"),
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => {
+        response.json();
+        setIsFavorite(true);
+        
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
   return (
     <div
       className="d-flex justify-content-center align-items-center"
@@ -32,11 +82,11 @@ export function RecipeDetails() {
         </div>
         <div className="text-end p-4">
           <button
-            className={`btn btn-outline-danger btn-lg ${
-              isFavorite ? "active" : ""
-            }`}
+            onClick={handleFavorites}
+            className={`btn btn-outline-danger btn-lg ${isFavorite ? "active" : ""}`}
           >
             add to favorites&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           
             {isFavorite ? (
               <FontAwesomeIcon icon={faHeart} />
             ) : (
@@ -48,3 +98,5 @@ export function RecipeDetails() {
     </div>
   );
 }
+
+          

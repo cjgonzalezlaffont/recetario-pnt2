@@ -3,7 +3,7 @@ import { Recipe } from "./Recipe";
 export function RecipeList(props) {
   return (
     <div>
-      <h1> ☻ ☻ ☻ RECIPE LIST ☻ ☻ ☻</h1>
+      <h1 className= "text m-4 display-4">RECIPES</h1>
       <div className="card-group d-flex justify-content-center align-items-center">
         {props.Recipes.map((recipe) => {
           return (

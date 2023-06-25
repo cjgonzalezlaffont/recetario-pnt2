@@ -47,11 +47,14 @@ export const Header = () => {
               {localStorage.getItem("token") ? (
                 <>
                   <li className="nav-item me-5">
-                    <Link to={"/recipesPage"} className="text-decoration-none">
+                    <Link to={"/favorites"} className="text-decoration-none">
                       <button className="nav-link">
                         <h5>Favorites</h5>
                       </button>
                     </Link>
+                  </li>
+                  <li>
+                    <p>Bienvenido {localStorage.getItem("mail")}</p>
                   </li>
 
                   <li className="nav-item me-5">
