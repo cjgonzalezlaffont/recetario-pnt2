@@ -19,7 +19,11 @@ export function RecipesPage(props) {
       });
   }, [search]);
   return (
-    <div>
+    <div
+      className={
+        "container d-flex justify-content-center align-items-center pt-2"
+      }
+    >
       <RecipeList Recipes={recipes} />
     </div>
   );
