@@ -7,33 +7,36 @@ import { useNavigate } from "react-router-dom";
 
 export function RecipeDetails() {
   const [isFavorite, setIsFavorite] = useState(false); // Cambié el valor inicial a `false`
+
+  // useEffect(() => {
+  //   setIsFavorite ();
+  // }, []); // No se necesita añadir localStorage.token como dependencia
+
+
+
   const location = useLocation();
   const navigate = useNavigate();
   const details = location.state?.Recipe || "";
 
   const handleFavorites = (event) => {
     const urlRecipesFavorites = "http://localhost:3001/api/recipes/favorites/"+details.Title+"/user/"+localStorage.getItem("_Id");
-    
-    
-     
     event.preventDefault();
     navigate("/favorites");
-
+  
 
     fetch(urlRecipesFavorites)
       .then((response) => {
         if (response) {
           response.json();
           setIsFavorite(true);
-          console.log(response);
+          console.log("fetch si hay response"+response.json());
         } else {
-          console.log(response);
+          console.log("fetch si NO hay response"+response);
         }
       })
       .catch((error) => {
         console.error(error);
       });
-  
 
     fetch(urlRecipesFavorites, {
       method: "POST",
@@ -56,7 +59,7 @@ export function RecipeDetails() {
       .catch((error) => {
         console.error(error);
       });
-  };
+    };
 
   return (
     <div

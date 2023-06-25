@@ -15,12 +15,6 @@ export const Header = () => {
 
   useEffect(() => {
     const storedToken = localStorage.getItem("token");
-
-    if (storedToken) {
-      // El usuario ha iniciado sesión, realizar acciones en consecuencia
-    } else {
-      // El usuario no ha iniciado sesión, realizar acciones en consecuencia
-    }
   }, []); // No se necesita añadir localStorage.token como dependencia
 
   const handleSignOut = () => {
