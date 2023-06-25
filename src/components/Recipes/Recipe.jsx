@@ -1,8 +1,21 @@
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export function Recipe(props) {
+  const navigate = useNavigate();
+  const recipeDetails = {
+    URLImage: props.Image,
+    Title: props.Title,
+    Ingredients: props.Ingredients,
+    Instructions: props.Instructions,
+  };
+  //console.log("PROPS" + props.Ingredients);
+  //console.log("RECIPEDETAILS" + recipeDetails.Ingredients);
+  const handleDetails = (event) => {
+    event.preventDefault();
+    navigate("/recipeDetails", { state: { Recipe: recipeDetails } });
+  };
   return (
-    <Link to={`./RecipeDetails`}>
+    <div>
       <div className="card p-2 m-4" style={{ width: "18rem", height: "31rem" }}>
         <img
           class="card-img-top"
@@ -33,11 +46,14 @@ export function Recipe(props) {
           >
             {props.Instructions.split(" ").slice(0, 20).join(" ") + "..."}
           </p>
-          <a href="./RecipeDetails" className="btn btn-primary">
+          {/* <a href="./RecipeDetails" className="btn btn-primary">
             Full recipe...
-          </a>
+          </a> */}
+          <button className="btn btn-outline-success" onClick={handleDetails}>
+            Full recipe...
+          </button>
         </div>
       </div>
-    </Link>
+    </div>
   );
 }

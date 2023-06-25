@@ -8,6 +8,7 @@ import { Footer } from "./components/footer/Footer";
 import { RecipeList } from "./components/Recipes/RecipeList";
 import { RecipesPage } from "./components/Recipes/RecipesPage";
 import { Recipe } from "./components/Recipes/Recipe";
+import { RecipeDetails } from "./components/Recipes/RecipeDetails";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <Route path="/recipes" element={<RecipeList />} />
           <Route path="/recipesPage" element={<RecipesPage />} />
           <Route path="/recipe" element={<Recipe />} />
+          <Route path="/recipeDetails" element={<RecipeDetails />} />
         </Routes>
       </main>
       <Footer></Footer>

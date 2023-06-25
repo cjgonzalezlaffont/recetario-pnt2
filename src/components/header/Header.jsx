@@ -10,7 +10,7 @@ export const Header = () => {
   };
   const handleSearch = (event) => {
     event.preventDefault();
-    navigate("/recipesPage", { state: { search: " "+searchTerm+" " } });
+    navigate("/recipesPage", { state: { search: " " + searchTerm + " " } });
   };
   return (
     <header>
@@ -31,7 +31,7 @@ export const Header = () => {
               <li className="nav-item me-5 ">
                 <Link to={"/recipesPage"} className={"text-decoration-none"}>
                   <button className={"nav-link"}>
-                    <h5>Recipes</h5>
+                    <h5>Favorites</h5>
                   </button>
                 </Link>
               </li>

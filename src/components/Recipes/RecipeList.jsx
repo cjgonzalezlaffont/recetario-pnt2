@@ -15,7 +15,6 @@ export function RecipeList(props) {
             />
           );
         })}
-        ;
       </div>
     </div>
   );
