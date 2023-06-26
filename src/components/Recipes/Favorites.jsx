@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { RecipeList } from "./RecipeList";
-import { useLocation } from "react-router-dom";
+//import { useLocation } from "react-router-dom";
 
 export function Favorites() {
   //const location = useLocation();
@@ -11,7 +11,11 @@ export function Favorites() {
     localStorage.getItem("_Id");
 
   useEffect(() => {
-    fetch(apiFavorites)
+    fetch(apiFavorites, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`, // Reemplaza "token" con la clave que utilizas para almacenar el token en el localStorage
+      },
+    })
       .then((response) => response.json())
       .then((data) => {
         setRecipes(data);
