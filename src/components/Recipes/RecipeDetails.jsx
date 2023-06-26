@@ -7,11 +7,10 @@ import { useNavigate } from "react-router-dom";
 
 export function RecipeDetails() {
   const [isFavorite, setIsFavorite] = useState(false); // Cambié el valor inicial a `false`
-
+  const [favoriteId, setFavoriteId] = useState(); //coloca el valor de la receta _id si es que la encuentra
   const location = useLocation();
   const navigate = useNavigate();
   const details = location.state?.Recipe || "";
-
   const urlGetFavoriteRecipe =
     "http://localhost:3001/api/recipes/favorites/" +
     details.Title +
@@ -20,37 +19,40 @@ export function RecipeDetails() {
   const urlAddFavoriteRecipe =
     "http://localhost:3001/api/recipes/favorites/add"; //URL para agregar receta
 
-  const favoriteExists = fetch(urlGetFavoriteRecipe)
-    .then(async (response) => {
-      let res = await response.json();
-      if (res && res.userId) {
+  async function getFavoriteRecipe() {
+    try {
+      const response = await fetch(urlGetFavoriteRecipe);
+      const res = await response.json();
+      if (res) {
         setIsFavorite(true);
+        setFavoriteId(res._id);
       }
-    })
-    .catch((error) => {
+      return res._id;
+    } catch (error) {
       console.error(error);
-    });
+    }
+  }
 
-  const urlDeleteFavoriteRecipe =
-    "http://localhost:3001/api/recipes/favorites/delete/" + favoriteExists._id; // URL para borrar la receta
+  getFavoriteRecipe();
 
   const handleFavorites = (event) => {
+    let urlDeleteFavoriteRecipe =
+      "http://localhost:3001/api/recipes/favorites/delete/" + favoriteId;
+
     if (isFavorite) {
-      fetch(
-        urlDeleteFavoriteRecipe,
-        {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }.then((response) => {
-          if (response.ok) {
-            console.log("La solicitud de eliminación se completó con éxito");
-          } else {
-            console.log("Hubo un error en la solicitud de eliminación");
-          }
-        })
-      );
+      fetch(urlDeleteFavoriteRecipe, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }).then((response) => {
+        if (response.ok) {
+          setIsFavorite(false);
+          console.log("La solicitud de eliminación se completó con éxito");
+        } else {
+          console.log("Hubo un error en la solicitud de eliminación");
+        }
+      });
     } else {
       fetch(urlAddFavoriteRecipe, {
         method: "POST",
@@ -77,8 +79,8 @@ export function RecipeDetails() {
 
   return (
     <div
-      className="d-flex justify-content-center align-items-center"
-      style={{ height: "100vh" }}
+      className="container d-flex justify-content-center align-items-center"
+      /*style={{ height: "100vh" }}*/
     >
       <div className="card p-2 m-4" style={{ width: "70%" }}>
         <img
