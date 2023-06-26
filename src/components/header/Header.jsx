@@ -40,6 +40,9 @@ export const Header = () => {
               </li>
               {localStorage.getItem("token") ? (
                 <>
+                  <li>
+                    <p>Bienvenido {localStorage.getItem("mail")}</p>
+                  </li>
                   <li className="nav-item me-5">
                     <Link to={"/favorites"} className="text-decoration-none">
                       <button className="nav-link">
@@ -47,12 +50,12 @@ export const Header = () => {
                       </button>
                     </Link>
                   </li>
-                  <li>
-                    <p>Bienvenido {localStorage.getItem("mail")}</p>
-                  </li>
-
                   <li className="nav-item me-5">
-                    <Link to={"/"} className="text-decoration-none" onClick={handleSignOut}>
+                    <Link
+                      to={"/"}
+                      className="text-decoration-none"
+                      onClick={handleSignOut}
+                    >
                       <button className="nav-link">
                         <h5>Sign-Out</h5>
                       </button>
@@ -78,7 +81,11 @@ export const Header = () => {
                 </>
               )}
 
-              <form className="d-flex col-4" role="search" onSubmit={handleSearch}>
+              <form
+                className="d-flex col-4"
+                role="search"
+                onSubmit={handleSearch}
+              >
                 <input
                   className="form-control me-2"
                   type="search"
