@@ -1,6 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import { SignIn } from "./components/login/SignIn";
 import { SignUp } from "./components/login/SignUp";
+import { UpdateUser } from "./components/login/UpdateUser";
 import { Header } from "./components/header/Header";
 import { Home } from "./components/home/Home";
 import { Authenticator } from "./components/login/Authenticator";
@@ -26,6 +27,7 @@ function App() {
           <Route path="/recipe" element={<Recipe />} />
           <Route path="/recipeDetails" element={<RecipeDetails />} />
           <Route path="/favorites" element={<Favorites />} />
+          <Route path="/updateUser" element={<UpdateUser />} />
         </Routes>
       </main>
       <Footer></Footer>

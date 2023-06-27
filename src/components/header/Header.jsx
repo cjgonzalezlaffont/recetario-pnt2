@@ -51,6 +51,13 @@ export const Header = () => {
                     </Link>
                   </li>
                   <li className="nav-item me-5">
+                    <Link to={"/updateUser"} className="text-decoration-none">
+                      <button className="nav-link">
+                        <h5>Edit Profile</h5>
+                      </button>
+                    </Link>
+                  </li>
+                  <li className="nav-item me-5">
                     <Link
                       to={"/"}
                       className="text-decoration-none"

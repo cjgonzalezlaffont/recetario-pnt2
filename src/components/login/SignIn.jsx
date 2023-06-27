@@ -19,6 +19,7 @@ export const SignIn = () => {
       email: formData.email,
       password: event.target.value,
     });
+    localStorage.setItem("password", event.target.value);
   };
   const handleSubmit = (event) => {
     //agregar Url de backend
@@ -40,8 +41,10 @@ export const SignIn = () => {
           // Almacenar el token en el almacenamiento local (localStorage)
           localStorage.setItem("token", token);
           localStorage.setItem("mail", formData.email);
-          localStorage.setItem("_Id", data.user._id );
-          console.log("token: " + token);
+          localStorage.setItem("_Id", data.user._id);
+          localStorage.setItem("firstName", data.user.firstName);
+          localStorage.setItem("lastName", data.user.lastName);
+
           // Hacer algo con el token, como guardarlo en el almacenamiento local o en las cookies. Para recuperarlo: localStorage.getItem("token")
           navigate("/");
         } else {

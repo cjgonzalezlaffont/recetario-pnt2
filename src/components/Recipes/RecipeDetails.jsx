@@ -21,7 +21,11 @@ export function RecipeDetails() {
 
   async function getFavoriteRecipe() {
     try {
-      const response = await fetch(urlGetFavoriteRecipe);
+      const response = await fetch(urlGetFavoriteRecipe, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`, // Reemplaza "token" con la clave que utilizas para almacenar el token en el localStorage
+        },
+      }); //jwtcheck
       const res = await response.json();
       if (res) {
         setIsFavorite(true);
@@ -39,10 +43,12 @@ export function RecipeDetails() {
     let urlDeleteFavoriteRecipe =
       "http://localhost:3001/api/recipes/favorites/delete/" + favoriteId;
 
-    if (isFavorite) {
+    if (isFavorite && localStorage.getItem("token")) {
       fetch(urlDeleteFavoriteRecipe, {
+        //jwtcheck
         method: "DELETE",
         headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
           "Content-Type": "application/json",
         },
       }).then((response) => {
@@ -53,7 +59,7 @@ export function RecipeDetails() {
           console.log("Hubo un error en la solicitud de eliminación");
         }
       });
-    } else {
+    } else if (!isFavorite && localStorage.getItem("token")) {
       fetch(urlAddFavoriteRecipe, {
         method: "POST",
         body: JSON.stringify({
@@ -64,6 +70,7 @@ export function RecipeDetails() {
           userId: localStorage.getItem("_Id"),
         }),
         headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
           "Content-Type": "application/json",
         },
       })
@@ -107,7 +114,7 @@ export function RecipeDetails() {
             }`}
           >
             add to favorites&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            {isFavorite ? (
+            {isFavorite && localStorage.getItem("token") ? (
               <FontAwesomeIcon icon={faHeart} />
             ) : (
               <FontAwesomeIcon icon={faHeartRegular} />
