@@ -8,8 +8,7 @@ export function Recipe(props) {
     Ingredients: props.Ingredients,
     Instructions: props.Instructions,
   };
-  //console.log("PROPS" + props.Ingredients);
-  //console.log("RECIPEDETAILS" + recipeDetails.Ingredients);
+
   const handleDetails = (event) => {
     event.preventDefault();
     navigate("/recipeDetails", { state: { Recipe: recipeDetails } });
@@ -46,9 +45,6 @@ export function Recipe(props) {
           >
             {props.Instructions.split(" ").slice(0, 20).join(" ") + "..."}
           </p>
-          {/* <a href="./RecipeDetails" className="btn btn-primary">
-            Full recipe...
-          </a> */}
           <button className="btn btn-outline-success" onClick={handleDetails}>
             Full recipe...
           </button>

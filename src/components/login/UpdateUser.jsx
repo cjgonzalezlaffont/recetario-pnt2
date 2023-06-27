@@ -6,35 +6,36 @@ export const UpdateUser = () => {
   const [formData, setFormData] = useState({
     firstName: localStorage.getItem("firstName"),
     lastName: localStorage.getItem("lastName"),
-    email: localStorage.getItem("mail"),
+    email: localStorage.getItem("email"),
+    birthdate: localStorage.getItem("birthdate"),
     password: "",
   });
 
   const handleFirstNameChange = (event) => {
-    // Actualiza el estado del formulario al cambiar el valor de first name, mantiene los otros values
     setFormData({
       firstName: event.target.value,
       lastName: formData.lastName,
       email: formData.email,
       password: formData.password,
+      birthdate: formData.birthdate,
     });
   };
-
   const handleLastNameChange = (event) => {
     setFormData({
       firstName: formData.firstName,
       lastName: event.target.value,
       email: formData.email,
       password: formData.password,
+      birthdate: formData.birthdate,
     });
   };
-
   const handleEmailChange = (event) => {
     setFormData({
       firstName: formData.firstName,
       lastName: formData.lastName,
       email: event.target.value,
       password: formData.password,
+      birthdate: formData.birthdate,
     });
   };
   const handlePasswordChange = (event) => {
@@ -43,37 +44,101 @@ export const UpdateUser = () => {
       lastName: formData.lastName,
       email: formData.email,
       password: event.target.value,
+      birthdate: formData.birthdate,
     });
   };
-
+  const handleBirthdateChange = (event) => {
+    setFormData({
+      firstName: formData.firstName,
+      lastName: formData.lastName,
+      email: formData.email,
+      password: formData.password,
+      birthdate: event.target.value,
+    });
+  };
   const handleSubmit = (event) => {
-    //agregar Url de backend
     const urlApiUsers =
       "http://localhost:3001/api/users/" + localStorage.getItem("_Id");
     event.preventDefault();
-    // Envía los datos al backend usando una solicitud HTTP (por ejemplo, fetch o axios)
     fetch(urlApiUsers, {
       method: "PUT",
-      body: JSON.stringify(formData),
+      body: JSON.stringify({
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        email: formData.email,
+        birthDate: formData.birthdate,
+      }),
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
         "Content-Type": "application/json",
       },
     })
-      .then(navigate("/"))
+      .then(() => {
+        navigate("/");
+        if (formData.birthdate) {
+          localStorage.setItem("birthdate", formData.birthdate);
+        }
+        if (formData.password) {
+          localStorage.setItem("password", formData.password);
+        }
+        if (formData.email) {
+        }
+        localStorage.setItem("email", formData.email);
+        if (formData.firstName) {
+          localStorage.setItem("firstName", formData.firstName);
+        }
+        if (formData.lastName) {
+          localStorage.setItem("lastName", formData.lastName);
+        }
+      })
       .catch((error) => {
         console.error(error);
       });
 
+    if (
+      formData.password &&
+      formData.email &&
+      localStorage.getItem("password") !== formData.password
+    ) {
+      const urlApiUsersPassword =
+        "http://localhost:3001/api/users/email/" +
+        localStorage.getItem("email");
+      fetch(urlApiUsersPassword, {
+        method: "PUT",
+        body: JSON.stringify({ password: formData.password }),
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          "Content-Type": "application/json",
+        },
+      })
+        .then(navigate("/"))
+        .catch((error) => {
+          console.error(error);
+        });
+    }
+  };
+
+  const handleButtonDelete = (event) => {
+    const urlApiUsers =
+      "http://localhost:3001/api/users/" + localStorage.getItem("_Id");
+    event.preventDefault();
     fetch(urlApiUsers, {
-      method: "PUT",
-      body: JSON.stringify(formData),
+      method: "DELETE",
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
         "Content-Type": "application/json",
       },
     })
-      .then(navigate("/"))
+      .then(() => {
+        localStorage.removeItem("token");
+        localStorage.removeItem("_Id");
+        localStorage.removeItem("password");
+        localStorage.removeItem("email");
+        localStorage.removeItem("firstName");
+        localStorage.removeItem("lastName");
+        localStorage.removeItem("birthdate");
+        navigate("/");
+      })
       .catch((error) => {
         console.error(error);
       });
@@ -95,7 +160,6 @@ export const UpdateUser = () => {
               onChange={handleFirstNameChange}
             />
           </div>
-
           <div className="mb-3">
             <label>Last name</label>
             <input
@@ -107,7 +171,6 @@ export const UpdateUser = () => {
               onChange={handleLastNameChange}
             />
           </div>
-
           <div className="mb-3">
             <label>Email address</label>
             <input
@@ -117,6 +180,17 @@ export const UpdateUser = () => {
               name="email"
               value={formData.email}
               onChange={handleEmailChange}
+            />
+          </div>
+          <div className="mb-3">
+            <label>birthdate</label>
+            <input
+              type="date"
+              className="form-control"
+              placeholder="Enter your birthdate"
+              name="birthdate"
+              value={formData.birthdate}
+              onChange={handleBirthdateChange}
             />
           </div>
           <div className="mb-3">
@@ -131,25 +205,30 @@ export const UpdateUser = () => {
             />
           </div>
           <div className="mb-3">
-            <label>Enter new Password</label>
+            <label>New Password</label>
             <input
               type="password"
               className="form-control"
               placeholder="Enter new password"
-              name="Newpassword"
+              /* name="Newpassword" */
               value={formData.password}
               onChange={handlePasswordChange}
             />
           </div>
-
           <div className="d-grid">
             <button type="submit" className="btn btn-primary">
               Update
             </button>
           </div>
-          <p className="forgot-password text-right">
-            Already registered <a href="/sign-in">sign in?</a>
-          </p>
+          <div className="d-grid mt-4">
+            <button
+              type="submit"
+              className="btn btn-danger"
+              onClick={handleButtonDelete}
+            >
+              Delete Profile
+            </button>
+          </div>
         </form>
       </div>
     </div>

@@ -1,36 +1,36 @@
+import React from "react";
 import { Link, useNavigate } from "react-router-dom";
-import logo from "../../assets/logo.png";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 export const Header = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const navigate = useNavigate();
+
   const handleChange = (event) => {
     setSearchTerm(event.target.value);
   };
+
   const handleSearch = (event) => {
     event.preventDefault();
     navigate("/recipesPage", { state: { search: " " + searchTerm + " " } });
   };
 
-  useEffect(() => {
-    const storedToken = localStorage.getItem("token");
-  }, []); // No se necesita añadir localStorage.token como dependencia
-
   const handleSignOut = () => {
     localStorage.removeItem("token");
-    // Realizar cualquier acción necesaria después de cerrar sesión
+    localStorage.removeItem("_Id");
+    localStorage.removeItem("password");
+    localStorage.removeItem("email");
+    localStorage.removeItem("firstName");
+    localStorage.removeItem("lastName");
+    localStorage.removeItem("birthdate");
   };
 
   return (
     <header>
       <nav className="navbar navbar-expand-lg bg-body-tertiary p-4">
         <div className="container-fluid">
-          <a className="navbar-brand me-5" href="#">
-            <img src={logo} alt="Bootstrap" width="120" height="50" />
-          </a>
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+            <ul className="navbar-nav col-8 me-auto mb-2 mb-lg-0 ms-lg-auto">
               <li className="nav-item me-5 ms-lg-5">
                 <Link to={"/"} className="text-decoration-none">
                   <button className="nav-link">
@@ -41,7 +41,7 @@ export const Header = () => {
               {localStorage.getItem("token") ? (
                 <>
                   <li>
-                    <p>Bienvenido {localStorage.getItem("mail")}</p>
+                    <p>Bienvenido {localStorage.getItem("email")}</p>
                   </li>
                   <li className="nav-item me-5">
                     <Link to={"/favorites"} className="text-decoration-none">
@@ -87,25 +87,25 @@ export const Header = () => {
                   </li>
                 </>
               )}
-
-              <form
-                className="d-flex col-4"
-                role="search"
-                onSubmit={handleSearch}
-              >
-                <input
-                  className="form-control me-2"
-                  type="search"
-                  placeholder="Search for a recipe"
-                  aria-label="Search"
-                  value={searchTerm}
-                  onChange={handleChange}
-                />
-                <button className="btn btn-outline-success" type="submit">
-                  GO!
-                </button>
-              </form>
             </ul>
+
+            <form
+              className="d-flex col-4 justify-content-end"
+              role="search"
+              onSubmit={handleSearch}
+            >
+              <input
+                className="form-control me-2"
+                type="search"
+                placeholder="Search for a recipe"
+                aria-label="Search"
+                value={searchTerm}
+                onChange={handleChange}
+              />
+              <button className="btn btn-outline-success" type="submit">
+                GO!
+              </button>
+            </form>
           </div>
         </div>
       </nav>

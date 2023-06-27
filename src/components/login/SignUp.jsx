@@ -1,19 +1,15 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export const SignUp = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
     email: "",
     password: "",
   });
-
-  const imprimirConsola = () => {
-    console.log(formData);
-  };
-
   const handleFirstNameChange = (event) => {
-    // Actualiza el estado del formulario al cambiar el valor de first name, mantiene los otros values
     setFormData({
       firstName: event.target.value,
       lastName: formData.lastName,
@@ -21,7 +17,6 @@ export const SignUp = () => {
       password: formData.password,
     });
   };
-
   const handleLastNameChange = (event) => {
     setFormData({
       firstName: formData.firstName,
@@ -30,7 +25,6 @@ export const SignUp = () => {
       password: formData.password,
     });
   };
-
   const handleEmailChange = (event) => {
     setFormData({
       firstName: formData.firstName,
@@ -47,12 +41,9 @@ export const SignUp = () => {
       password: event.target.value,
     });
   };
-
   const handleSubmit = (event) => {
-    //agregar Url de backend
-    const urlApiUsers = "http://localhost:3001/api/users/"; //SACAR HARCODEADO
+    const urlApiUsers = "http://localhost:3001/api/users/";
     event.preventDefault();
-    // Envía los datos al backend usando una solicitud HTTP (por ejemplo, fetch o axios)
     fetch(urlApiUsers, {
       method: "POST",
       body: JSON.stringify(formData),
@@ -62,11 +53,10 @@ export const SignUp = () => {
     })
       .then((response) => response.json())
       .then((data) => {
-        // Maneja la respuesta del backend si es necesario
         setFormData(data);
+        navigate("/");
       })
       .catch((error) => {
-        // Maneja los errores de la solicitud si es necesario
         console.error(error);
       });
   };
@@ -87,7 +77,6 @@ export const SignUp = () => {
               onChange={handleFirstNameChange}
             />
           </div>
-
           <div className="mb-3">
             <label>Last name</label>
             <input
@@ -99,7 +88,6 @@ export const SignUp = () => {
               onChange={handleLastNameChange}
             />
           </div>
-
           <div className="mb-3">
             <label>Email address</label>
             <input
@@ -111,7 +99,6 @@ export const SignUp = () => {
               onChange={handleEmailChange}
             />
           </div>
-
           <div className="mb-3">
             <label>Password</label>
             <input
@@ -123,19 +110,11 @@ export const SignUp = () => {
               onChange={handlePasswordChange}
             />
           </div>
-
           <div className="d-grid">
-            <button
-              type="submit"
-              className="btn btn-primary"
-              onClick={imprimirConsola}
-            >
+            <button type="submit" className="btn btn-primary">
               Sign Up
             </button>
           </div>
-          <p className="forgot-password text-right">
-            Already registered <a href="/sign-in">sign in?</a>
-          </p>
         </form>
       </div>
     </div>

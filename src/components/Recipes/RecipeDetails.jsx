@@ -6,8 +6,8 @@ import { faHeart as faHeartRegular } from "@fortawesome/free-regular-svg-icons";
 import { useNavigate } from "react-router-dom";
 
 export function RecipeDetails() {
-  const [isFavorite, setIsFavorite] = useState(false); // Cambié el valor inicial a `false`
-  const [favoriteId, setFavoriteId] = useState(); //coloca el valor de la receta _id si es que la encuentra
+  const [isFavorite, setIsFavorite] = useState(false);
+  const [favoriteId, setFavoriteId] = useState();
   const location = useLocation();
   const navigate = useNavigate();
   const details = location.state?.Recipe || "";
@@ -15,7 +15,7 @@ export function RecipeDetails() {
     "http://localhost:3001/api/recipes/favorites/" +
     details.Title +
     "/user/" +
-    localStorage.getItem("_Id"); //URL que consulta si la receta esta en favoritos
+    localStorage.getItem("_Id");
   const urlAddFavoriteRecipe =
     "http://localhost:3001/api/recipes/favorites/add"; //URL para agregar receta
 
@@ -23,7 +23,7 @@ export function RecipeDetails() {
     try {
       const response = await fetch(urlGetFavoriteRecipe, {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`, // Reemplaza "token" con la clave que utilizas para almacenar el token en el localStorage
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       }); //jwtcheck
       const res = await response.json();
@@ -36,9 +36,7 @@ export function RecipeDetails() {
       console.error(error);
     }
   }
-
   getFavoriteRecipe();
-
   const handleFavorites = (event) => {
     let urlDeleteFavoriteRecipe =
       "http://localhost:3001/api/recipes/favorites/delete/" + favoriteId;
@@ -85,10 +83,7 @@ export function RecipeDetails() {
   };
 
   return (
-    <div
-      className="container d-flex justify-content-center align-items-center"
-      /*style={{ height: "100vh" }}*/
-    >
+    <div className="container d-flex justify-content-center align-items-center">
       <div className="card p-2 m-4" style={{ width: "70%" }}>
         <img
           className="card-img-top"

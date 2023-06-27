@@ -19,13 +19,10 @@ export const SignIn = () => {
       email: formData.email,
       password: event.target.value,
     });
-    localStorage.setItem("password", event.target.value);
   };
   const handleSubmit = (event) => {
-    //agregar Url de backend
-    const urlApiUsers = "http://localhost:3001/api/users/login"; //SACAR HARCODEADO
+    const urlApiUsers = "http://localhost:3001/api/users/login";
     event.preventDefault();
-    // Envía los datos al backend usando una solicitud HTTP (por ejemplo, fetch o axios)
     fetch(urlApiUsers, {
       method: "POST",
       body: JSON.stringify(formData),
@@ -36,19 +33,25 @@ export const SignIn = () => {
       .then((response) => response.json())
       .then((data) => {
         if (data.token) {
-          // El token se recibió correctamente
           const token = data.token;
-          // Almacenar el token en el almacenamiento local (localStorage)
           localStorage.setItem("token", token);
-          localStorage.setItem("mail", formData.email);
-          localStorage.setItem("_Id", data.user._id);
-          localStorage.setItem("firstName", data.user.firstName);
-          localStorage.setItem("lastName", data.user.lastName);
-
-          // Hacer algo con el token, como guardarlo en el almacenamiento local o en las cookies. Para recuperarlo: localStorage.getItem("token")
+          if (data.user._id) {
+            localStorage.setItem("_Id", data.user._id);
+          }
+          if (formData.password) {
+            localStorage.setItem("password", formData.password);
+          }
+          if (formData.email) {
+          }
+          localStorage.setItem("email", formData.email);
+          if (data.user.firstName) {
+            localStorage.setItem("firstName", data.user.firstName);
+          }
+          if (data.user.lastName) {
+            localStorage.setItem("lastName", data.user.lastName);
+          }
           navigate("/");
         } else {
-          // No se recibió un token en la respuesta del backend
           setErrorCredentials("Credenciales inválidas. Inténtalo de nuevo.");
         }
       })
@@ -71,7 +74,6 @@ export const SignIn = () => {
               onChange={handleEmailChange}
             />
           </div>
-
           <div className="mb-3">
             <label>Password</label>
             <input
@@ -82,29 +84,11 @@ export const SignIn = () => {
               onChange={handlePasswordChange}
             />
           </div>
-
-          <div className="mb-3">
-            <div className="custom-control custom-checkbox">
-              <input
-                type="checkbox"
-                className="custom-control-input"
-                id="customCheck1"
-              />
-              <label className="custom-control-label" htmlFor="customCheck1">
-                Remember me
-              </label>
-            </div>
-          </div>
-
           <div className="d-grid">
             <button type="submit" className="btn btn-primary">
               Submit
             </button>
           </div>
-
-          <p className="forgot-password text-right">
-            Forgot <a href="#">password?</a>
-          </p>
         </form>
         {errorCredentials && <div className="error">{errorCredentials}</div>}
       </div>
